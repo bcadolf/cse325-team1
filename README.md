@@ -11,9 +11,6 @@
 
 ## Overview:
 
-What problem does your application solve or what need does it meet?
-Who would use your application? (target users)
-What makes your idea interesting or valuable?
 It helps the user track events and gives reminders of the events so the do not forget. It helps them track daily progress or events of the day. It will also help them remember certain aspects of the day so they are able to reflect on it.
 This is primarly for anybody that wants to get more organized while still keeping track of their daily lives. The purpose of joining the two services together is to make it more convenient for anyone to see current, future and past events all in one place.
 
