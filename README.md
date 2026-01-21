@@ -49,11 +49,11 @@ OUT:
 
 ### Tech:
 
-Data Storage: User profiles, journal entries, event dates, images
-User Accounts: Username and password
-External Api: TBD
-Devices: Web App with responsive mobile views
-Security: TBD
+- Data Storage: User profiles, journal entries, event dates, images
+- User Accounts: Username and password
+- External Api: TBD
+- Devices: Web App with responsive mobile views
+- Security: TBD
 
 ## Project Links
 
