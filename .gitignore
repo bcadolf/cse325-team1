@@ -1,0 +1,57 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# VS Code extensions & debug
+.history/
+*.vsix
+.vscode-test/
+
+# ASP.NET Core published output
+wwwroot/lib/
+wwwroot/dist/
+wwwroot/node_modules/
+
+# Node-related (if using frontend tooling)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Logs
+*.log
+
+# Environment variables
+*.env
+
+# Rider / JetBrains
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# NuGet
+*.nupkg
+packages/
+
+# Backup & temp files
+*.tmp
+*.bak
+*.swp
+
+# Azure Functions local settings
+local.settings.json
+
+# Dotnet tools
+.dotnet-tools/
