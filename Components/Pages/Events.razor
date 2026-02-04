@@ -1,0 +1,47 @@
+@using cse325_team1.Data.Models
+@using cse325_team1.Data.Services
+
+
+@page "/Events"
+
+@inject IEventService EventService
+
+<h3>Events</h3>
+<div>
+    <div class="top-bar">
+        <button>&#43;</button>
+        <button class="list-view">&#9776;</button>
+        <button class="grid-view">&#9783;</button>
+    </div>
+
+    <p>toogle to grid vs list</p>
+    <ul class="events-cont">
+        @if (events != null) {
+            @foreach (var eventItem in events) {
+                <li>
+                    <h4>
+                        @eventItem.title
+                    </h4>
+                    <div>
+                        <span>@eventItem.dateTime</span>
+                        @eventItem.description
+                        <span>@eventItem.firstName @eventItem.lastName</span>
+                    </div>
+                </li>
+            }
+        }
+
+    </ul>
+</div>
+
+
+
+@code {
+
+    private List<EventModel> events;
+
+    protected override async Task OnInitializedAsync() {
+        events = await EventService.GetEventsAsync();
+    }
+    
+}

@@ -1,10 +1,14 @@
 using cse325_team1.Components;
+using cse325_team1.Data.Services;
+using cse325_team1.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped<IEventService, JsonEventService>();
+
 
 var app = builder.Build();
 
