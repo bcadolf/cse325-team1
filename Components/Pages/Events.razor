@@ -1,5 +1,6 @@
 @using cse325_team1.Data.Models
 @using cse325_team1.Data.Services
+@using cse325_team1.Components.Shared
 
 
 @page "/Events"
@@ -13,8 +14,6 @@
         <button class="list-view">&#9776;</button>
         <button class="grid-view">&#9783;</button>
     </div>
-
-    <p>toogle to grid vs list</p>
     <ul class="events-cont">
         @if (events != null) {
             @foreach (var eventItem in events) {
@@ -22,15 +21,17 @@
                     <h4>
                         @eventItem.title
                     </h4>
+                    <Countdown Target="@eventItem.dateTime" />
                     <div>
                         <span>@eventItem.dateTime</span>
                         @eventItem.description
                         <span>@eventItem.firstName @eventItem.lastName</span>
                     </div>
+                    <button>Edit</button>
+                    <button>Delete</button>
                 </li>
             }
         }
-
     </ul>
 </div>
 

@@ -1,0 +1,52 @@
+
+<div>
+    @if (TimeLeft is null) {
+        <span>Loading time left....</span>
+    }
+    else 
+    {
+        <span>
+            @TimeLeft.Value.Days d
+            @TimeLeft.Value.Hours h
+            @TimeLeft.Value.Minutes m
+            @TimeLeft.Value.Seconds s
+        </span>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public DateTime Target { get; set; }
+
+    private TimeSpan? TimeLeft;
+    private System.Threading.Timer? _timer;
+
+    protected override void OnInitialized() {
+        UpdateTime();
+
+        _timer = new System.Threading.Timer(_ => {
+            UpdateTime();
+            InvokeAsync(StateHasChanged);
+        },
+        null,
+        TimeSpan.Zero,
+        TimeSpan.FromSeconds(1));
+    }
+    private void UpdateTime()
+    {
+        var now = DateTime.Now;
+        TimeLeft = Target - now;
+
+        if (TimeLeft <= TimeSpan.Zero) 
+        {
+            TimeLeft = TimeSpan.Zero;
+            _timer?.Dispose();
+        }
+    }
+
+    public void Dispose() 
+    {
+        _timer?.Dispose();
+    }
+
+}
