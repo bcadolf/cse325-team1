@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CSE325Team1.Models
+namespace cse325_team1.Models
 {
     public class JournalEntry
     {
