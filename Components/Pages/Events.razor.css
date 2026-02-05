@@ -1,0 +1,12 @@
+.top-bar {
+  border-bottom: 2px solid #09b8edeb;
+  padding: 1rem;
+}
+
+.btn {
+  background-color: #8a2be2;
+  color: #fff;
+  padding: 4px;
+  border: 1px solid #30104f;
+  box-shadow: 2px 3px 8 5px #838b8deb;
+}
