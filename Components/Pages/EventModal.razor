@@ -1,0 +1,33 @@
+@* EventModal.razor *@
+
+
+<div class="@ModalClass">
+    @if (eventType == "add") {
+        <h4>Add Event</h4>
+    } 
+    else if (eventType == "edit") {
+        <h4>Edit Event</h4>
+    }
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string eventType { get; set; } = "add";
+    [Parameter]
+    public bool IsActive { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsActiveChanged { get; set; }
+
+    private string ModalClass => IsActive ? "modal show" : "modal hide";
+
+    public void Close() {
+        IsActiveChanged.InvokeAsync(false);
+    }
+
+
+
+
+
+}

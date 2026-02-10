@@ -1,6 +1,7 @@
 @using cse325_team1.Data.Models
 @using cse325_team1.Data.Services
 @using cse325_team1.Components.Shared
+@using cse325_team1.Components
 
 
 @page "/Events"
@@ -8,28 +9,20 @@
 @inject IEventService EventService
 
 <h3>Events</h3>
-<div>
+<div class="events-page">
     <div class="top-bar">
-        <button class="btn add-event-btn">&#43;</button>
-        <button class="btn list-view">&#9776;</button>
-        <button class="btn grid-view">&#9783;</button>
+        <button class="btn add-event-btn" @onclick="ShowAdd">&#43;</button>
+        <button class="btn list-view-btn" @onclick="listView" title="List View Button">&#9776;</button>
+        <button class="btn grid-view-btn" @onclick="gridView" title="Grid View Button">&#9783;</button>
     </div>
-    <ul class="events-cont">
+    <div class="modal-cont">
+    <EventModal eventType="@currentType" IsActive="@isModalOpen" IsActiveChanged="@((v) => isModalOpen = v)" />
+    </div>
+
+    <ul class="events-cont @CssClass">
         @if (events != null) {
-            @foreach (var eventItem in events) {
-                <li>
-                    <h4>
-                        @eventItem.title
-                    </h4>
-                    <Countdown Target="@eventItem.dateTime" />
-                    <div>
-                        <span>@eventItem.dateTime</span>
-                        @eventItem.description
-                        <span>@eventItem.firstName @eventItem.lastName</span>
-                    </div>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </li>
+            @foreach (var e in events) {
+                <Event dateTime="@e.dateTime" title="@e.title" description="@e.description" location="@e.location" OnEdit="() => ShowEdit(e)"/>
             }
         }
     </ul>
@@ -41,8 +34,34 @@
 
     private List<EventModel> events;
 
+    private string CssClass = "list-view";
+
     protected override async Task OnInitializedAsync() {
         events = await EventService.GetEventsAsync();
+    }
+
+    private void listView() {
+        CssClass = "list-view";
+    }
+
+    private void gridView() {
+        CssClass = "grid-view";
+    }
+
+    private bool isModalOpen = false;
+    private string currentType = "add";
+
+    private void ShowAdd()
+    {
+        currentType = "add";
+        isModalOpen = true;
+    }
+
+    public void ShowEdit(EventModel e)
+    {
+        currentType = "edit";
+        isModalOpen = true;
+
     }
     
 }
