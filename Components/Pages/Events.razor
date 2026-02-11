@@ -16,7 +16,7 @@
         <button class="btn grid-view-btn" @onclick="gridView" title="Grid View Button">&#9783;</button>
     </div>
     <div class="modal-cont">
-    <EventModal eventType="@currentType" IsActive="@isModalOpen" IsActiveChanged="@((v) => isModalOpen = v)" />
+    <EventModal eventType="@currentType" IsActive="@isModalOpen" IsActiveChanged="@((v) => isModalOpen = v)" SelectedEvent="@SelectedEvent" />
     </div>
 
     <ul class="events-cont @CssClass">
@@ -33,6 +33,8 @@
 @code {
 
     private List<EventModel> events;
+
+    private EventModel SelectedEvent;
 
     private string CssClass = "list-view";
 
@@ -61,7 +63,7 @@
     {
         currentType = "edit";
         isModalOpen = true;
-
+        SelectedEvent = e;
     }
     
 }

@@ -1,4 +1,5 @@
 @using cse325_team1.Components.Pages
+@using cse325_team1.Data.Models
 
 <div class="@ModalClass">
     @if (eventType == "add") {
@@ -32,13 +33,13 @@
         IsActiveChanged.InvokeAsync(false);
     }
 
-    private async Task HandleAdd(EventModel e)
+    private async Task AddEvent(EventModel e)
     {
         // save to DB code
         await IsActiveChanged.InvokeAsync(false);
     }
 
-    private async Task HandleEdit(EventModel e)
+    private async Task EditEvent(EventModel e)
     {
         // update DB or service code
         await IsActiveChanged.InvokeAsync(false);
