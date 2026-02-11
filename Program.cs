@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ✅ Blazor auth (custom)
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AppAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 
 builder.Services.AddScoped<AuthService>();

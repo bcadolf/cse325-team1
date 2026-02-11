@@ -9,7 +9,7 @@ namespace cse325_team1.Data
 
         public DbSet<JournalEntry> JournalEntries { get; set; }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserProfile> Users { get; set; }
         
     }
 }
