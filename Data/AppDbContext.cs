@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using CSE325Team1.Models;
+using cse325_team1.Models;
 
-namespace CSE325Team1.Data
+namespace cse325_team1.Data
 {
     public class AppDbContext : DbContext
     {
