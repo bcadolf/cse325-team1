@@ -1,12 +1,15 @@
-@* EventModal.razor *@
-
+@using cse325_team1.Components.Pages
 
 <div class="@ModalClass">
     @if (eventType == "add") {
         <h4>Add Event</h4>
+        <button class="btn close" @onclick="Close">X</button>
+        <AddEvent />
     } 
     else if (eventType == "edit") {
         <h4>Edit Event</h4>
+        <button class="btn close" @onclick="Close">X</button>
+
     }
 </div>
 
