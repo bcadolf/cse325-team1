@@ -1,0 +1,63 @@
+@page "/profile"
+@using cse325_team1.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AppDbContext Db
+@inject cse325_team1.Services.AuthService Auth
+@inject cse325_team1.Services.SessionStore Session
+@inject NavigationManager Nav
+
+<div class="card">
+    <h1 class="h1">Profile</h1>
+
+    @if (!Session.IsLoggedIn)
+    {
+        <p class="p">You are not logged in.</p>
+        <div class="actions">
+            <a class="btn primary" href="/login">Login</a>
+            <a class="btn ghost" href="/signup">Sign up</a>
+        </div>
+    }
+    else if (user is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <p class="p">Account details</p>
+
+        <div class="grid two">
+            <div class="card">
+                <div class="badge">Username</div>
+                <div style="margin-top:8px;font-weight:800">@user.Username</div>
+            </div>
+            <div class="card">
+                <div class="badge">Name</div>
+                <div style="margin-top:8px;font-weight:800">@user.FirstName @user.LastName</div>
+            </div>
+        </div>
+
+        <div class="actions" style="margin-top:14px">
+            <a class="btn" href="/journals">My journal entries</a>
+            <button class="btn danger" @onclick="Logout">Logout</button>
+        </div>
+    }
+</div>
+
+@code {
+    private Models.UserProfile? user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn || Session.UserId is null) return;
+
+        user = await Db.Users.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == Session.UserId.Value);
+    }
+
+    private void Logout()
+    {
+        Auth.Logout();
+        Nav.NavigateTo("/login");
+    }
+}

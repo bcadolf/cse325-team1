@@ -1,23 +1,17 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Routing
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="container">
+    <div class="header">
+        <div class="brand">Journal App</div>
+        <div class="nav">
+            <NavLink href="/" Match="NavLinkMatch.All">Home</NavLink>
+            <NavLink href="/journals">Journals</NavLink>
+            <NavLink href="/profile">Profile</NavLink>
+            <NavLink href="/login">Login</NavLink>
+            <NavLink href="/signup">Sign up</NavLink>
+        </div>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
-
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    @Body
 </div>

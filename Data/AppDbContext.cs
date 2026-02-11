@@ -8,5 +8,8 @@ namespace cse325_team1.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<JournalEntry> JournalEntries { get; set; }
+
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        
     }
 }

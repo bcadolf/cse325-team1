@@ -1,25 +1,26 @@
 using cse325_team1.Components;
 using cse325_team1.Data;
+using cse325_team1.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// EF Core (SQLite)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=journal.db"));
 
-var app = builder.Build();
+// ✅ Blazor auth (custom)
+builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 
-// Ensure DB exists (ok for dev; for real apps use migrations)
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
-}
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<SessionStore>();
+
+var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
@@ -27,20 +28,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRouting();        // ✅ routing first
-
-// If you later add real auth:
-// app.UseAuthentication();
-// app.UseAuthorization();
-
-app.UseAntiforgery();    // ✅ after routing (+ after auth if you add it)
+app.UseRouting();
+app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-   .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode();
 
 app.Run();
