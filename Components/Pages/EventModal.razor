@@ -4,11 +4,12 @@
     @if (eventType == "add") {
         <h4>Add Event</h4>
         <button class="btn close" @onclick="Close">X</button>
-        <AddEvent />
+        <AddEvent Onsubmit="AddEvent" />
     } 
     else if (eventType == "edit") {
         <h4>Edit Event</h4>
         <button class="btn close" @onclick="Close">X</button>
+        <EditEvent OnSubmit="EditEvent" editingEvent="@SelectedEvent" />
 
     }
 </div>
@@ -22,11 +23,25 @@
     public bool IsActive { get; set; }
     [Parameter]
     public EventCallback<bool> IsActiveChanged { get; set; }
+    [Parameter]
+    public EventModel SelectedEvent { get; set; }
 
     private string ModalClass => IsActive ? "modal show" : "modal hide";
 
     public void Close() {
         IsActiveChanged.InvokeAsync(false);
+    }
+
+    private async Task HandleAdd(EventModel e)
+    {
+        // save to DB code
+        await IsActiveChanged.InvokeAsync(false);
+    }
+
+    private async Task HandleEdit(EventModel e)
+    {
+        // update DB or service code
+        await IsActiveChanged.InvokeAsync(false);
     }
 
 

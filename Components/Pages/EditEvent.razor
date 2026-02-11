@@ -1,0 +1,43 @@
+@using cse325_team1.Data.Models
+
+<EditForm Model="@editingEvent" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-field">
+        <label>Title</label>
+        <InputText @bind-Value="editingEvent.title" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Date & Time</label>
+        <input type="datetime-local" @bind="editingEvent.dateTime" class="form-input" />    
+    </div>
+
+    <div class="form-field">
+        <label>Description</label>
+        <InputTextArea @bind-Value="editingEvent.description" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Category</label>
+        <InputText @bind-Value="editingEvent.category" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Location</label>
+        <InputText @bind-Value="editingEvent.location" class="form-input" />
+    </div>
+
+    <button type="submit" class="btn submit-btn">Save Changes</button>
+</EditForm>
+
+@code {
+    [Parameter] public EventModel editingEvent { get; set; }
+    [Parameter] public EventCallback<EventModel> OnSubmit { get; set; }
+
+    private async Task HandleSubmit()
+    {
+        await OnSubmit.InvokeAsync(editingEvent);
+    }
+}
