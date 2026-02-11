@@ -1,25 +1,25 @@
 [
   {
     "title": "Team Standup Meeting",
-    "dateTime": "2026-02-05T09:00:00",
+    "dateTime": "2026-02-22T09:00:00",
     "description": "Daily sync to review progress and blockers.",
-    "firstName": "Brandon",
-    "lastName": "Adolf",
+    "firstName": "John",
+    "lastName": "Maxwell",
     "category": "Work",
     "location": "Office"
   },
   {
     "title": "Unity UI Refactor Session",
-    "dateTime": "2026-02-06T14:30:00",
+    "dateTime": "2026-03-06T14:30:00",
     "description": "Refactoring the dynamic input panel and stat UI.",
-    "firstName": "Brandon",
-    "lastName": "Adolf",
+    "firstName": "John",
+    "lastName": "Maxwell",
     "category": "Development",
     "location": "Office"
   },
   {
     "title": "Grocery Pickup",
-    "dateTime": "2026-02-07T17:00:00",
+    "dateTime": "2026-03-07T17:00:00",
     "description": "Weekly grocery pickup from the local store.",
     "firstName": "Sarah",
     "lastName": "Miller",
@@ -28,16 +28,16 @@
   },
   {
     "title": "Game Lore Brainstorm",
-    "dateTime": "2026-02-08T11:00:00",
+    "dateTime": "2026-04-08T11:00:00",
     "description": "Session to expand magical artifact lore and acronyms.",
-    "firstName": "Brandon",
-    "lastName": "Adolf",
+    "firstName": "John",
+    "lastName": "Maxwell",
     "category": "Creative",
     "location": "Office"
   },
   {
     "title": "Dentist Appointment",
-    "dateTime": "2026-02-10T08:15:00",
+    "dateTime": "2026-10-10T08:15:00",
     "description": "Routine cleaning and checkup.",
     "firstName": "Michael",
     "lastName": "Reeves",
@@ -46,16 +46,16 @@
   },
   {
     "title": "React Native Navigation Review",
-    "dateTime": "2026-02-11T16:00:00",
+    "dateTime": "2026-02-28T16:00:00",
     "description": "Reviewing route groups and layout inheritance.",
-    "firstName": "Brandon",
-    "lastName": "Adolf",
+    "firstName": "John",
+    "lastName": "Maxwell",
     "category": "Development",
     "location": "Office"
   },
   {
     "title": "Birthday Dinner",
-    "dateTime": "2026-02-12T19:30:00",
+    "dateTime": "2026-06-12T19:30:00",
     "description": "Celebrating a friend's birthday at a local restaurant.",
     "firstName": "Emily",
     "lastName": "Stone",
@@ -64,10 +64,10 @@
   },
   {
     "title": "Weekly Planning Session",
-    "dateTime": "2026-02-13T10:00:00",
+    "dateTime": "2026-02-27T10:00:00",
     "description": "Planning tasks and goals for the upcoming week.",
-    "firstName": "Brandon",
-    "lastName": "Adolf",
+    "firstName": "John",
+    "lastName": "Maxwell",
     "category": "Organization",
     "location": "Office"
   }
