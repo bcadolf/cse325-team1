@@ -71,3 +71,14 @@ h1:focus {
 .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.btn {
+  background-color: #6813b8b9;
+  color: #fff;
+  padding: 6px;
+  width: auto;
+  border: 1px solid #30104f;
+  border-radius: 10px;
+  box-shadow: 1px 2px 4px 2px #838b8deb;
+  margin: 10px;
+}

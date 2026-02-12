@@ -11,9 +11,9 @@
 <PageTitle>Home</PageTitle>
 
 <div class="home-welcome">
-    Welcome to JournalMan, the one place to stop for both journal and event keeping. You can signup and keep a personal record of you daily life, while also tracking future event with an included countdown until its time! View below for some examples. 
+    Welcome to JournalMan, the one place to stop for both journal and event keeping. You can signup and keep a personal record of your daily life, while also tracking future event with an included countdown until its time! View below for some examples. 
 </div>
-<button class="@CssClass" @onclick="SetTarget" >@target</button>
+<button class="btn @CssClass" @onclick="SetTarget" >@target</button>
 
 <div class="home-content">
     @if (!user) {
@@ -23,14 +23,17 @@
                 <Event dateTime="@e.dateTime" title="@e.title" description="@e.description" location="@e.location" />
             }
         }
-    </ul>
+        else if (CssClass == "journal") {
+            <div>Journal examples</div>
+        }
+        </ul>
     }
 </div>
 
 
 
 @code {
-    private string target { get; set; } = "Events";
+    private string target { get; set; } = "Journal";
     private string CssClass { get; set; } = "events";
     private bool user { get; set; } = false;
     private List<EventModel> events;
@@ -42,11 +45,11 @@
     private void SetTarget() {
         if (target == "Events") {
             target = "Journal";
-            CssClass = "journal";
+            CssClass = "events";
         }
         else if (target == "Journal") {
             target = "Events";
-            CssClass = "events";
+            CssClass = "journal";
         }
     }
 }
