@@ -15,13 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ✅ Custom Blazor auth (register ONCE)
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
-
-builder.Services.AddScoped<SessionStore>();
-
-// concrete provider + base mapping (so both types resolve)
 builder.Services.AddScoped<AppAuthStateProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
-    sp.GetRequiredService<AppAuthStateProvider>());
+builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 
 builder.Services.AddScoped<AuthService>();
 
