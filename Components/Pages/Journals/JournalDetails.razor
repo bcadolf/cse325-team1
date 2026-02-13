@@ -1,0 +1,56 @@
+@page "/journals/{Id:int}"
+@using cse325_team1.Data
+@using cse325_team1.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+@inject cse325_team1.Services.SessionStore Session
+
+<div class="card">
+    @if (!Session.IsLoggedIn || Session.UserId is null)
+    {
+        <div class="err">Please login.</div>
+    }
+    else if (item is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+            <div>
+                <h1 class="h1">@item.Title</h1>
+                <span class="badge">Updated: @item.UpdatedAt.ToLocalTime()</span>
+            </div>
+            <div class="actions">
+                <a class="btn ghost" href="@($"/journals/{item.Id}/edit")">Edit</a>
+                <a class="btn danger" href="@($"/journals/{item.Id}/delete")">Delete</a>
+                <a class="btn" href="/journals">Back</a>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top:14px">
+            <div class="card">
+                <div class="badge">Entry</div>
+                <pre style="white-space:pre-wrap;margin:10px 0 0 0">@item.Entry</pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">Content</div>
+                <pre style="white-space:pre-wrap;margin:10px 0 0 0">@item.Content</pre>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private JournalEntry? item;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn || Session.UserId is null) return;
+
+        item = await Db.JournalEntries.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == Id && x.UserId == Session.UserId.Value);
+    }
+}

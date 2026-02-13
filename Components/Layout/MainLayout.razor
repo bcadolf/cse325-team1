@@ -1,13 +1,23 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Routing
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="container">
+    <div class="header">
+        <div class="brand">Journal App</div>
+        <div class="nav">
+            <NavLink href="/" Match="NavLinkMatch.All">Home</NavLink>
+            <NavLink href="/journals">Journals</NavLink>
+            <NavLink href="/profile">Profile</NavLink>
+            <NavLink href="/login">Login</NavLink>
+            <NavLink href="/signup">Sign up</NavLink>
+        </div>
     </div>
 
     <main>
         <div class="top-row px-4">
             <a href="/account">Account</a>
+            <a href="/login">Login</a>
+            <a href="/signup">Sign Up</a>
         </div>
 
         <article class="content px-4">

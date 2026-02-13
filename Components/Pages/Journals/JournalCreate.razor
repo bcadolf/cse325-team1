@@ -1,0 +1,63 @@
+@page "/journals/create"
+@using cse325_team1.Data
+@using cse325_team1.Models
+@inject AppDbContext Db
+@inject cse325_team1.Services.SessionStore Session
+@inject NavigationManager Nav
+
+<div class="card">
+    <h1 class="h1">New Journal Entry</h1>
+    <p class="p">Write something meaningful today.</p>
+
+    @if (!Session.IsLoggedIn || Session.UserId is null)
+    {
+        <div class="err">Please login first.</div>
+        <div class="actions">
+            <a class="btn primary" href="/login">Login</a>
+        </div>
+    }
+    else
+    {
+        <EditForm Model="model" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-row">
+                <label>Title</label>
+                <InputText class="form-control" @bind-Value="model.Title" />
+            </div>
+
+            <div class="form-row">
+                <label>Entry</label>
+                <InputTextArea @bind-Value="model.Entry" />
+            </div>
+
+            <div class="form-row">
+                <label>Content</label>
+                <InputTextArea @bind-Value="model.Content" />
+                <small>Keep Entry vs Content if you really need both; otherwise remove one.</small>
+            </div>
+
+            <div class="actions">
+                <button class="btn primary" type="submit">Save</button>
+                <a class="btn ghost" href="/journals">Cancel</a>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private JournalEntry model = new();
+
+    private async Task Save()
+    {
+        model.UserId = Session.UserId!.Value;
+        model.CreatedAt = DateTime.UtcNow;
+        model.UpdatedAt = DateTime.UtcNow;
+
+        Db.JournalEntries.Add(model);
+        await Db.SaveChangesAsync();
+
+        Nav.NavigateTo("/journals");
+    }
+}
