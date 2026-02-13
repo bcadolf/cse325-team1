@@ -1,0 +1,57 @@
+@page "/signup"
+@inject cse325_team1.Data.Services.AuthService Auth
+@inject NavigationManager Nav
+
+<div class="card">
+    <h1 class="h1">Create account</h1>
+    <p class="p">Sign up to start journaling.</p>
+
+    <div class="grid two">
+        <div class="form-row">
+            <label>First name</label>
+            <input @bind="firstName" />
+        </div>
+
+        <div class="form-row">
+            <label>Last name</label>
+            <input @bind="lastName" />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <label>Username</label>
+        <input @bind="username" />
+    </div>
+
+    <div class="form-row">
+        <label>Password</label>
+        <input type="password" @bind="password" />
+        <small>Passwords are stored as a secure hash.</small>
+    </div>
+
+    <div class="actions">
+        <button class="btn primary" @onclick="DoSignup">Create account</button>
+        <a class="btn ghost" href="/login">I already have an account</a>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(msg))
+    {
+        <div class="err">@msg</div>
+    }
+</div>
+
+@code {
+    private string firstName = "";
+    private string lastName = "";
+    private string username = "";
+    private string password = "";
+    private string? msg;
+
+    private async Task DoSignup()
+    {
+        var (ok, message) = await Auth.SignupAsync(username, password, firstName, lastName);
+        if (!ok) { msg = message; return; }
+
+        Nav.NavigateTo("/profile", forceLoad: false);
+    }
+}

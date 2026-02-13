@@ -1,0 +1,70 @@
+@page "/journals/{Id:int}/edit"
+@using cse325_team1.Data
+@using cse325_team1.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+@inject cse325_team1.Data.Services.SessionStore Session
+@inject NavigationManager Nav
+
+<div class="card">
+    <h1 class="h1">Edit Entry</h1>
+
+    @if (!Session.IsLoggedIn || Session.UserId is null)
+    {
+        <div class="err">Please login.</div>
+    }
+    else if (model is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <EditForm Model="model" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-row">
+                <label>Title</label>
+                <InputText @bind-Value="model.Title" />
+            </div>
+
+            <div class="form-row">
+                <label>Entry</label>
+                <InputTextArea @bind-Value="model.Entry" />
+            </div>
+
+            <div class="form-row">
+                <label>Content</label>
+                <InputTextArea @bind-Value="model.Content" />
+            </div>
+
+            <div class="actions">
+                <button class="btn primary" type="submit">Save changes</button>
+                <a class="btn ghost" href="@($"/journals/{Id}")">Cancel</a>
+            </div>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private JournalEntry? model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn || Session.UserId is null) return;
+
+        model = await Db.JournalEntries
+            .FirstOrDefaultAsync(x => x.Id == Id && x.UserId == Session.UserId.Value);
+    }
+
+    private async Task Save()
+    {
+        if (model is null) return;
+
+        model.UpdatedAt = DateTime.UtcNow;
+        await Db.SaveChangesAsync();
+
+        Nav.NavigateTo($"/journals/{Id}");
+    }
+}
