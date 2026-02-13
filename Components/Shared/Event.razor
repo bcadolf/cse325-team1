@@ -8,10 +8,13 @@
         @title
     </h4>
     <Countdown Target="@dateTime" />
-    <div>
+    <div class=event-display>
+    <div class="event-details">
         <span>@dateTime</span>
         @description
         <span>Location: @location</span>
+    </div>
+    <img src="" alt="">
     </div>
     <button class="btn" @onclick="OnEditClicked">Edit</button>
     <button class="btn">Delete</button>
