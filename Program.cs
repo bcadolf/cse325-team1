@@ -12,13 +12,18 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=journal.db"));
 
-// ✅ Blazor auth (custom)
+// ✅ Custom Blazor auth (register ONCE)
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
+
+builder.Services.AddScoped<SessionStore>();
+
+// concrete provider + base mapping (so both types resolve)
+builder.Services.AddScoped<AppAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
+    sp.GetRequiredService<AppAuthStateProvider>());
 
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<SessionStore>();
 
 var app = builder.Build();
 
@@ -30,6 +35,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
 app.UseAntiforgery();
 
