@@ -8,9 +8,24 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<IEventService, JsonEventService>();
+
+// Your app services
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<SessionStore>();
+builder.Services.AddScoped<AppAuthStateProvider>();
+
+// If you’re using AuthenticationStateProvider pattern:
+builder.Services.AddScoped<Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider>(
+    sp => sp.GetRequiredService<AppAuthStateProvider>());
+
+builder.Services.AddAuthorizationCore();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>

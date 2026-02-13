@@ -1,9 +1,9 @@
 @page "/journals/{Id:int}"
 @using cse325_team1.Data
-@using cse325_team1.Models
+@using cse325_team1.Data.Models
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext Db
-@inject cse325_team1.Services.SessionStore Session
+@inject cse325_team1.Data.Services.SessionStore Session
 
 <div class="card">
     @if (!Session.IsLoggedIn || Session.UserId is null)

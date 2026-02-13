@@ -3,8 +3,8 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AppDbContext Db
-@inject cse325_team1.Services.AuthService Auth
-@inject cse325_team1.Services.SessionStore Session
+@inject cse325_team1.Data.Services.AuthService Auth
+@inject cse325_team1.Data.Services.SessionStore Session
 @inject NavigationManager Nav
 
 <div class="card">
@@ -45,7 +45,7 @@
 </div>
 
 @code {
-    private Models.UserProfile? user;
+    private Data.Models.UserProfile? user;
 
     protected override async Task OnInitializedAsync()
     {

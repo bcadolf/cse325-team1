@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using cse325_team1.Models;
+using cse325_team1.Data.Models;
 
 namespace cse325_team1.Data
 {
