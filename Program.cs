@@ -2,7 +2,6 @@ using cse325_team1.Components;
 using cse325_team1.Data.Services;
 using cse325_team1.Data.Models;
 using cse325_team1.Data;
-using cse325_team1.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<IEventService, JsonEventService>();
 
 // Your app services
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<cse325_team1.Data.Services.AuthService>();
 builder.Services.AddScoped<SessionStore>();
 builder.Services.AddScoped<AppAuthStateProvider>();
 
@@ -37,7 +36,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AppAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 
-builder.Services.AddScoped<cse325_team1.Services.SessionStore>();
+builder.Services.AddScoped<SessionStore>();
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components.Routing
+@inject cse325_team1.Data.Services.SessionStore Session
 
 <div class="page">
     <div class="sidebar">
@@ -8,9 +9,12 @@
     
     <main>
         <div class="top-row px-4">
-            <a href="/account">Account</a>
+            <a href="/profile">Profile</a>
             <a href="/login">Login</a>
-            <a href="/signup">Sign Up</a>
+            @if (!Session.IsLoggedIn) {
+                <a href="/signup">Sign Up</a>
+            }
+            
         </div>
 
         <article class="content px-4">
@@ -24,3 +28,7 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+   
+}
