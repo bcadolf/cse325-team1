@@ -20,7 +20,7 @@
         <ul class="home-cont @CssClass">
         @if (CssClass == "events" && events != null) {
             @foreach (var e in events.Take(3)) {
-                <Event dateTime="@e.dateTime" title="@e.title" description="@e.description" location="@e.location" />
+                <EventSingle DateTime="@e.DateTime" title="@e.Title" Description="@e.Description" Location="@e.Location" />
             }
         }
         else if (CssClass == "journal") {
@@ -36,7 +36,7 @@
     private string target { get; set; } = "Journal";
     private string CssClass { get; set; } = "events";
     private bool user { get; set; } = false;
-    private List<EventModel> events;
+    private List<Event> events;
     
     protected override async Task OnInitializedAsync() {
         events = await EventService.GetEventsAsync();

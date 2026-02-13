@@ -9,7 +9,7 @@ public class Event
     [Required, MaxLength(120)]
     public string Title { get; set; } = "";
 
-    public DateTime DateTime { get; set; }
+    public DateTime DateTime { get; set; } = DateTime.UtcNow;
 
     public string? Description { get; set; }
 

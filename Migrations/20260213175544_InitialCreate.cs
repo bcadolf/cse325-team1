@@ -30,7 +30,7 @@ namespace cse325_team1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -46,9 +46,9 @@ namespace cse325_team1.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Event_Users_UserId",
+                        name: "FK_Events_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -97,9 +97,9 @@ namespace cse325_team1.Migrations
                 {
                     table.PrimaryKey("PK_ImageBlob", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImageBlob_Event_EventId",
+                        name: "FK_ImageBlob_Events_EventId",
                         column: x => x.EventId,
-                        principalTable: "Event",
+                        principalTable: "Events",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ImageBlob_JournalEntries_JournalId",
@@ -109,8 +109,8 @@ namespace cse325_team1.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_UserId",
-                table: "Event",
+                name: "IX_Events_UserId",
+                table: "Events",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -136,7 +136,7 @@ namespace cse325_team1.Migrations
                 name: "ImageBlob");
 
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "JournalEntries");

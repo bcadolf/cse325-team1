@@ -11,7 +11,7 @@ using cse325_team1.Data;
 namespace cse325_team1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260213132657_InitialCreate")]
+    [Migration("20260213175544_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -58,7 +58,7 @@ namespace cse325_team1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("cse325_team1.Data.Models.ImageBlob", b =>

@@ -12,13 +12,13 @@ public class JsonEventService : IEventService
         _env = env;
     }
 
-    public async Task<List<EventModel>> GetEventsAsync()
+    public async Task<List<Event>> GetEventsAsync()
     {
         var path = Path.Combine(_env.WebRootPath, "Data", "TempData", "events.json");
 
         var json = await File.ReadAllTextAsync(path);
 
-        return JsonSerializer.Deserialize<List<EventModel>>(json)
-               ?? new List<EventModel>();
+        return JsonSerializer.Deserialize<List<Event>>(json)
+               ?? new List<Event>();
     }
 }

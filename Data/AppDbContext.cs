@@ -10,6 +10,8 @@ namespace cse325_team1.Data
         public DbSet<JournalEntry> JournalEntries { get; set; }
 
         public DbSet<UserProfile> Users { get; set; }
+
+        public DbSet<Event> Events { get; set; }
         
     }
 }

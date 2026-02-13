@@ -1,0 +1,53 @@
+@using cse325_team1.Data.Models
+
+<EditForm Model="@tempModel" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-field">
+        <label>Title</label>
+        <InputText @bind-Value="tempModel.Title" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Date & Time</label>
+        <input type="datetime-local" @bind="tempModel.DateTime" class="form-input" />    
+    </div>
+
+    <div class="form-field">
+        <label>Description</label>
+        <InputTextArea @bind-Value="tempModel.Description" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Category</label>
+        <InputText @bind-Value="tempModel.Category" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Location</label>
+        <InputText @bind-Value="tempModel.Location" class="form-input" />
+    </div>
+
+    <button type="submit" class="btn submit-btn">Save Changes</button>
+</EditForm>
+
+@code {
+    [Parameter] public Event editingEvent { get; set; }
+    [Parameter] public EventCallback<Event> OnSubmit { get; set; }
+
+    private Event tempModel = new();
+
+    protected override void OnParametersSet() {
+        if (editingEvent != null) { 
+            tempModel = new Event { 
+                Id = editingEvent.Id, Title = editingEvent.Title, Description = editingEvent.Description, Category = editingEvent.Category, Location = editingEvent.Location, DateTime = editingEvent.DateTime, UserId = editingEvent.UserId 
+            }; 
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        await OnSubmit.InvokeAsync(tempModel);
+    }
+}

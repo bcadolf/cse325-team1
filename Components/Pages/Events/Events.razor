@@ -1,0 +1,135 @@
+@using cse325_team1.Data.Models
+@using cse325_team1.Data.Services
+@using cse325_team1.Data
+@using cse325_team1.Components.Shared
+@using cse325_team1.Components
+@using Microsoft.EntityFrameworkCore
+
+
+
+@inject AppDbContext Db
+@inject SessionStore Session
+
+@page "/Events"
+
+@inject IEventService EventService
+
+<h3>Events</h3>
+<div class="events-page">
+    <div class="top-bar">
+        <button class="btn add-event-btn" @onclick="ShowAdd" title="Add New Event">&#43;</button>
+        <button class="btn list-view-btn" @onclick="listView" title="List View Button">&#9776;</button>
+        <button class="btn grid-view-btn" @onclick="gridView" title="Grid View Button">&#9783;</button>
+    </div>
+    <div class="modal-cont">
+    <EventModal eventType="@currentType" IsActive="@isModalOpen" IsActiveChanged="@((v) => isModalOpen = v)" SelectedEvent="@SelectedEvent" OnAddEvent="AddEvent" OnEditEvent="EditEvent"/>
+    </div>
+
+    <ul class="events-cont @CssClass">
+        @if (events?.Any() == true) {
+            @foreach (var e in events) {
+                <EventSingle DateTime="@e.DateTime" Title="@e.Title" Description="@e.Description" Location="@e.Location" OnEdit="() => ShowEdit(e)" OnDelete="() => DeleteEvent(e)" />
+            }
+        } else {
+            <EventSingle Title="Blank Entry" Description="Click the + above to add your first entry." />
+        }
+    </ul>
+</div>
+
+
+
+@code {
+
+    private List<Event> events;
+
+    private Event SelectedEvent;
+
+    private string CssClass = "list-view";
+
+    protected override async Task OnInitializedAsync() {
+        if (Session.IsLoggedIn) {
+            events = await Db.Events.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync();
+        } else if  (!Session.IsLoggedIn) {
+            events = await EventService.GetEventsAsync();
+        }
+        
+
+    }
+
+    private void listView() {
+        CssClass = "list-view";
+    }
+
+    private void gridView() {
+        CssClass = "grid-view";
+    }
+
+    private bool isModalOpen = false;
+    private string currentType = "add";
+    private void ShowAdd()
+    {
+        currentType = "add";
+        isModalOpen = true;
+    }
+
+    public async Task AddEvent(Event e)
+    {
+        currentType = "add";
+        isModalOpen = false;
+
+        events = await Db.Events.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync();
+
+        StateHasChanged();
+    }
+
+
+    public void ShowEdit(Event e)
+    {
+        currentType = "edit";
+        isModalOpen = true;
+        SelectedEvent = e;
+    }
+
+    public async Task EditEvent(Event edited) {
+        var current = await Db.Events.FindAsync(edited.Id);
+
+        if (current != null) {
+            current.Title = edited.Title;
+            current.DateTime = edited.DateTime;
+            current.Description = edited.Description;
+            current.Category = edited.Category;
+            current.UpdatedAt = DateTime.UtcNow;
+
+            await Db.SaveChangesAsync();
+        }
+        events = await Db.Events.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync(); 
+            
+        StateHasChanged();
+
+    }
+
+    public async Task DeleteEvent(Event e) {
+        var current = await Db.Events.FindAsync(e.Id);
+
+        if (current != null) {
+            Db.Events.Remove(current);
+            await Db.SaveChangesAsync();
+        }
+        events = await Db.Events.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync(); 
+            
+        StateHasChanged();
+    }
+    
+}
