@@ -22,7 +22,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AppAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, AppAuthStateProvider>();
 
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<cse325_team1.Services.SessionStore>();
 
 var app = builder.Build();
 
