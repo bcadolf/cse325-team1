@@ -27,9 +27,6 @@ builder.Services.AddScoped<Microsoft.AspNetCore.Components.Authorization.Authent
 builder.Services.AddAuthorizationCore();
 
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=journal.db"));
-
 // ✅ Custom Blazor auth (register ONCE)
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
