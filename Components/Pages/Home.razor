@@ -1,10 +1,15 @@
 ﻿@using cse325_team1.Components.Shared
 @using cse325_team1.Data.Models
+@using cse325_team1.Data
 @using cse325_team1.Data.Services
+@using Microsoft.EntityFrameworkCore
+
 
 @page "/"
 
 @inject IEventService EventService
+@inject SessionStore Session
+@inject AppDbContext Db
 
 
 
@@ -16,18 +21,43 @@
 <button class="btn @CssClass" @onclick="SetTarget" >@target</button>
 
 <div class="home-content">
-    @if (!user) {
         <ul class="home-cont @CssClass">
         @if (CssClass == "events" && events != null) {
+            <h4>Event Examples</h4>
             @foreach (var e in events.Take(3)) {
                 <EventSingle DateTime="@e.DateTime" title="@e.Title" Description="@e.Description" Location="@e.Location" />
             }
         }
         else if (CssClass == "journal") {
-            <div>Journal examples</div>
+            <h4>Journal examples</h4>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Updated</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var j in journals.Take(3))
+            {
+                <tr>
+                    <td>
+                        <div style="font-weight:900">@j.Title</div>
+                        <div class="badge">Id: @j.Id</div>
+                    </td>
+                    <td>@j.UpdatedAt.ToLocalTime()</td>
+                    <td style="white-space:nowrap">
+                        <a class="btn" href="@($"/journals/{j.Id}")">Open</a>
+                        <a class="btn ghost" href="@($"/journals/{j.Id}/edit")">Edit</a>
+                        <a class="btn danger" href="@($"/journals/{j.Id}/delete")">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
         }
         </ul>
-    }
 </div>
 
 
@@ -35,11 +65,20 @@
 @code {
     private string target { get; set; } = "Journal";
     private string CssClass { get; set; } = "events";
-    private bool user { get; set; } = false;
     private List<Event> events;
+
+    private List<JournalEntry> journals;
     
     protected override async Task OnInitializedAsync() {
-        events = await EventService.GetEventsAsync();
+        if (Session.IsLoggedIn) {
+            events = await Db.Events.AsNoTracking()
+                .Where(x => x.UserId == Session.UserId.Value)
+                .OrderByDescending(x => x.UpdatedAt)
+                .ToListAsync();
+        } else if  (!Session.IsLoggedIn) {
+            events = await EventService.GetEventsAsync();
+            journals = await EventService.GetJournalsAsync();
+        }
     }
 
     private void SetTarget() {

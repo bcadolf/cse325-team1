@@ -1,0 +1,52 @@
+[
+  {
+    "Id": 1,
+    "Title": "Morning Productivity Boost",
+    "Entry": "Reflections on today's workflow",
+    "Content": "Started the day strong with a focused coding session. Cleaned up some Blazor components and finally fixed the modal state bug. Feeling good about the progress.",
+    "UserId": 1,
+    "Images": [],
+    "CreatedAt": "2026-02-10T08:15:00Z",
+    "UpdatedAt": "2026-02-10T08:15:00Z"
+  },
+  {
+    "Id": 2,
+    "Title": "Unity Beast System Breakthrough",
+    "Entry": "Design notes",
+    "Content": "Made major progress on the ScriptableObject + JSON hybrid architecture. Runtime instances now cleanly separate from static templates. This is going to scale beautifully.",
+    "UserId": 1,
+    "Images": [],
+    "CreatedAt": "2026-02-11T14:42:00Z",
+    "UpdatedAt": "2026-02-11T14:42:00Z"
+  },
+  {
+    "Id": 3,
+    "Title": "Late Night Debugging",
+    "Entry": "Troubleshooting session",
+    "Content": "Spent way too long chasing a null reference in the event modal. Turned out to be a missing parameter binding. Learned (again) to trust the logs.",
+    "UserId": 1,
+    "Images": [],
+    "CreatedAt": "2026-02-12T01:03:00Z",
+    "UpdatedAt": "2026-02-12T01:03:00Z"
+  },
+  {
+    "Id": 4,
+    "Title": "Blazor Styling Wins",
+    "Entry": "UI polish",
+    "Content": "Finally got the purple theme consistent across forms. Scoped CSS was fighting me, but global styles cleaned everything up. The UI feels cohesive now.",
+    "UserId": 1,
+    "Images": [],
+    "CreatedAt": "2026-02-12T17:20:00Z",
+    "UpdatedAt": "2026-02-12T17:20:00Z"
+  },
+  {
+    "Id": 5,
+    "Title": "Weekend Planning",
+    "Entry": "Personal notes",
+    "Content": "Planning to refactor the event service layer and maybe sketch out some new lore ideas. Also need to remember to take a break and touch grass.",
+    "UserId": 1,
+    "Images": [],
+    "CreatedAt": "2026-02-13T09:55:00Z",
+    "UpdatedAt": "2026-02-13T09:55:00Z"
+  }
+]

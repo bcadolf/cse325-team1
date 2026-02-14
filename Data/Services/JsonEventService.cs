@@ -21,4 +21,14 @@ public class JsonEventService : IEventService
         return JsonSerializer.Deserialize<List<Event>>(json)
                ?? new List<Event>();
     }
+
+    public async Task<List<JournalEntry>> GetJournalsAsync()
+    {
+        var path = Path.Combine(_env.WebRootPath, "Data", "TempData", "journals.json");
+
+        var json = await File.ReadAllTextAsync(path);
+
+        return JsonSerializer.Deserialize<List<JournalEntry>>(json)
+                ?? new List<JournalEntry>();
+    }
 }
