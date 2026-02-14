@@ -15,9 +15,15 @@
 
 <PageTitle>Home</PageTitle>
 
-<div class="home-welcome">
+@if (Session.IsLoggedIn) {
+    <div class="home-welcome">Welcome @Session.Username to JournalMan. This page will give you a small set of your Events and Journal Entries. Navigate to the specific pages to view all of them.</div>
+}
+else {
+    <div class="home-welcome">
     Welcome to JournalMan, the one place to stop for both journal and event keeping. You can signup and keep a personal record of your daily life, while also tracking future event with an included countdown until its time! View below for some examples. 
 </div>
+}
+
 <button class="btn @CssClass" @onclick="SetTarget" >@target</button>
 
 <div class="home-content">
@@ -75,6 +81,10 @@
                 .Where(x => x.UserId == Session.UserId.Value)
                 .OrderByDescending(x => x.UpdatedAt)
                 .ToListAsync();
+            journals = await Db.JournalEntries.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync();
         } else if  (!Session.IsLoggedIn) {
             events = await EventService.GetEventsAsync();
             journals = await EventService.GetJournalsAsync();
