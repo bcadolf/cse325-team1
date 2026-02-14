@@ -9,7 +9,7 @@
 
 ### JournalMan
 
-[JournalMan Production Site](journalman-eecad5hmaqf0a9b0.eastus-01.azurewebsites.net)
+[JournalMan Production Site](https://journalman-eecad5hmaqf0a9b0.eastus-01.azurewebsites.net)
 
 ## Overview:
 
