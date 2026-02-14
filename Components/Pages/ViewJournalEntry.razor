@@ -1,0 +1,35 @@
+@page "/journal/view/{id:int}"
+@using cse325_team1.Data.Models
+
+@inject cse325_team1.Data.AppDbContext DbContext
+
+<PageTitle>View Journal Entry</PageTitle>
+
+<div class="container mt-4">
+    <h3 class="text-primary">View Journal Entry</h3>
+
+    @if (entry == null)
+    {
+        <p class="text-muted"><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@entry.Title</h5>
+                <p class="card-text">@entry.Content</p>
+                <p class="text-muted"><small>Created At: @entry.CreatedAt.ToString("g")</small></p>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private JournalEntry? entry;
+
+    protected override async Task OnInitializedAsync()
+    {
+        entry = await DbContext.JournalEntries.FindAsync(Id);
+    }
+}

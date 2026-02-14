@@ -1,0 +1,48 @@
+@using cse325_team1.Components.Shared
+@using cse325_team1.Components.Pages
+
+
+
+<li class="event-item">
+    <h4>
+        @Title
+    </h4>
+    <Countdown Target="@DateTime" />
+    <div class=event-display>
+    <div class="event-details">
+        <span>@DateTime</span>
+        @Description
+        <span>Location: @Location</span>
+    </div>
+    <img src="" alt="">
+    </div>
+    <button class="btn" @onclick="OnEditClicked">Edit</button>
+    <button class="btn" @onclick="OnDeleteClicked" >Delete</button>
+</li>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public DateTime DateTime { get; set;}
+    [Parameter]
+    public string Description { get; set; }
+    [Parameter]
+    public string Location { get; set; }
+
+    [Parameter] 
+    public EventCallback OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+
+    private Task OnEditClicked()
+    {
+        return OnEdit.InvokeAsync();
+    }
+
+    private Task OnDeleteClicked() {
+        return OnDelete.InvokeAsync();
+    }
+    
+}

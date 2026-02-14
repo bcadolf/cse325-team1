@@ -1,0 +1,54 @@
+@using cse325_team1.Data.Models
+
+@inject cse325_team1.Data.Services.SessionStore Session
+@inject cse325_team1.Data.AppDbContext Db
+
+<EditForm Model="@newEvent" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-field">
+        <label>Title</label>
+        <InputText  @bind-Value="newEvent.Title" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Date & Time</label>
+        <input type="datetime-local" @bind="newEvent.DateTime" class="form-input" />    
+    </div>
+
+    <div class="form-field">
+        <label>Description</label>
+        <InputTextArea  @bind-Value="newEvent.Description" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Category</label>
+        <InputText @bind-Value="newEvent.Category" class="form-input" />
+    </div>
+
+    <div class="form-field">
+        <label>Location</label>
+        <InputText @bind-Value="newEvent.Location" class="form-input" />
+    </div>
+    <button type="submit" class="btn submit-btn">Add Event</button>
+
+</EditForm>
+
+
+@code {
+    private Event newEvent = new();
+
+    [Parameter]
+    public EventCallback<Event> OnSubmit { get; set; }
+
+    private async Task HandleSubmit() {
+        newEvent.UserId = Session.UserId!.Value;
+        
+        Db.Events.Add(newEvent);
+        await Db.SaveChangesAsync();
+
+        await OnSubmit.InvokeAsync(newEvent);
+        newEvent = new();
+    }
+}

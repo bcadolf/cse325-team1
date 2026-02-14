@@ -1,0 +1,57 @@
+@using cse325_team1.Components.Pages
+@using cse325_team1.Data.Models
+
+<div class="@ModalClass">
+    @if (eventType == "add") {
+        <h4>Add Event</h4>
+        <button class="btn close" @onclick="Close">X</button>
+        <AddEvent Onsubmit="@AddEvent" />
+    } 
+    else if (eventType == "edit") {
+        <h4>Edit Event</h4>
+        <button class="btn close" @onclick="Close">X</button>
+        <EditEvent OnSubmit="@EditEvent" editingEvent="@SelectedEvent" />
+
+    }
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string eventType { get; set; } = "add";
+    [Parameter]
+    public bool IsActive { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsActiveChanged { get; set; }
+    [Parameter]
+    public Event SelectedEvent { get; set; }
+    [Parameter] 
+    public EventCallback<Event> OnAddEvent { get; set; }
+    [Parameter]
+    public EventCallback<Event> OnEditEvent { get; set; }
+
+
+    private string ModalClass => IsActive ? "modal show" : "modal hide";
+
+    public void Close() {
+        IsActiveChanged.InvokeAsync(false);
+    }
+
+    private async Task AddEvent(Event e)
+    {   
+        await OnAddEvent.InvokeAsync(e);
+        await IsActiveChanged.InvokeAsync(false);
+    }
+
+    private async Task EditEvent(Event e)
+    {
+        await OnEditEvent.InvokeAsync(e);        
+        await IsActiveChanged.InvokeAsync(false);
+    }
+
+
+
+
+
+}

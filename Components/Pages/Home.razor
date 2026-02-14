@@ -1,7 +1,55 @@
-﻿@page "/"
+﻿@using cse325_team1.Components.Shared
+@using cse325_team1.Data.Models
+@using cse325_team1.Data.Services
+
+@page "/"
+
+@inject IEventService EventService
+
+
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="home-welcome">
+    Welcome to JournalMan, the one place to stop for both journal and event keeping. You can signup and keep a personal record of your daily life, while also tracking future event with an included countdown until its time! View below for some examples. 
+</div>
+<button class="btn @CssClass" @onclick="SetTarget" >@target</button>
 
-Welcome to your new app.
+<div class="home-content">
+    @if (!user) {
+        <ul class="home-cont @CssClass">
+        @if (CssClass == "events" && events != null) {
+            @foreach (var e in events.Take(3)) {
+                <EventSingle DateTime="@e.DateTime" title="@e.Title" Description="@e.Description" Location="@e.Location" />
+            }
+        }
+        else if (CssClass == "journal") {
+            <div>Journal examples</div>
+        }
+        </ul>
+    }
+</div>
+
+
+
+@code {
+    private string target { get; set; } = "Journal";
+    private string CssClass { get; set; } = "events";
+    private bool user { get; set; } = false;
+    private List<Event> events;
+    
+    protected override async Task OnInitializedAsync() {
+        events = await EventService.GetEventsAsync();
+    }
+
+    private void SetTarget() {
+        if (target == "Events") {
+            target = "Journal";
+            CssClass = "events";
+        }
+        else if (target == "Journal") {
+            target = "Events";
+            CssClass = "journal";
+        }
+    }
+}

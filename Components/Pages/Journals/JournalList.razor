@@ -1,0 +1,79 @@
+@page "/journals"
+@using cse325_team1.Data
+@using cse325_team1.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+@inject cse325_team1.Data.Services.SessionStore Session
+@inject NavigationManager Nav
+
+<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+        <div>
+            <h1 class="h1">Journal Entries</h1>
+            <p class="p">Your personal entries, beautifully organized.</p>
+        </div>
+
+        <div class="actions">
+            <a class="btn primary" href="/journals/create">+ New entry</a>
+        </div>
+    </div>
+
+    @if (!Session.IsLoggedIn)
+    {
+        <div class="err">Please login to view your journal entries.</div>
+        <div class="actions">
+            <a class="btn primary" href="/login">Login</a>
+        </div>
+    }
+    else if (items is null)
+    {
+        <p>Loading...</p>
+    }
+    else if (items.Count == 0)
+    {
+        <p class="p">No entries yet. Create your first one.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Updated</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var j in items)
+            {
+                <tr>
+                    <td>
+                        <div style="font-weight:900">@j.Title</div>
+                        <div class="badge">Id: @j.Id</div>
+                    </td>
+                    <td>@j.UpdatedAt.ToLocalTime()</td>
+                    <td style="white-space:nowrap">
+                        <a class="btn" href="@($"/journals/{j.Id}")">Open</a>
+                        <a class="btn ghost" href="@($"/journals/{j.Id}/edit")">Edit</a>
+                        <a class="btn danger" href="@($"/journals/{j.Id}/delete")">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code {
+    private List<JournalEntry>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn || Session.UserId is null) return;
+
+        items = await Db.JournalEntries.AsNoTracking()
+            .Where(x => x.UserId == Session.UserId.Value)
+            .OrderByDescending(x => x.UpdatedAt)
+            .ToListAsync();
+    }
+}

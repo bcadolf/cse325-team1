@@ -1,0 +1,19 @@
+/* .btn {
+  background-color: #6813b8b9;
+  color: #fff;
+  padding: 3px;
+  width: auto;
+  height: 2rem;
+  border: 1px solid #30104f;
+  border-radius: 10px;
+  box-shadow: 1px 2px 4px 2px #838b8deb;
+} */
+
+.form-field {
+  margin: 10px;
+  text-align: right;
+}
+
+.form-input {
+  width: 188px;
+}

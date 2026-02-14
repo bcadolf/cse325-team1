@@ -1,0 +1,57 @@
+@page "/journals/{Id:int}/delete"
+@using cse325_team1.Data
+@using cse325_team1.Data.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+@inject cse325_team1.Data.Services.SessionStore Session
+@inject NavigationManager Nav
+
+<div class="card">
+    <h1 class="h1">Delete Entry</h1>
+
+    @if (!Session.IsLoggedIn || Session.UserId is null)
+    {
+        <div class="err">Please login.</div>
+    }
+    else if (item is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <p class="p">Are you sure you want to delete this entry?</p>
+
+        <div class="card">
+            <div style="font-weight:900">@item.Title</div>
+            <div class="badge">Id: @item.Id</div>
+        </div>
+
+        <div class="actions">
+            <button class="btn danger" @onclick="Delete">Yes, delete</button>
+            <a class="btn ghost" href="@($"/journals/{Id}")">Cancel</a>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private JournalEntry? item;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Session.IsLoggedIn || Session.UserId is null) return;
+
+        item = await Db.JournalEntries
+            .FirstOrDefaultAsync(x => x.Id == Id && x.UserId == Session.UserId.Value);
+    }
+
+    private async Task Delete()
+    {
+        if (item is null) return;
+
+        Db.JournalEntries.Remove(item);
+        await Db.SaveChangesAsync();
+
+        Nav.NavigateTo("/journals");
+    }
+}
