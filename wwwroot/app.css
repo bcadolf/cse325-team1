@@ -1,6 +1,7 @@
 html,
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin: 0 !important;
 }
 
 a,
@@ -81,4 +82,42 @@ h1:focus {
   border-radius: 10px;
   box-shadow: 1px 2px 4px 2px #838b8deb;
   margin: 10px;
+}
+
+.nav-link {
+  text-decoration: none !important;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+.table th,
+.table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.table th {
+  color: #cfe0ff;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.03);
+}
+.table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.card {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.35);
 }
