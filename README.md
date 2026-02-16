@@ -62,3 +62,5 @@ OUT:
 [Trello Board](https://trello.com/invite/b/6970dcedac8ce9550d9846ff/ATTIc31709b0f2d05f3cc158c0e533500c6bFDA7215A/cse325-team1)
 
 [Github](https://github.com/bcadolf/cse325-team1)
+
+[Youtube link](https://youtu.be/DscOPfBQWKw)
